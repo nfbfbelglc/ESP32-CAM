@@ -1,0 +1,30 @@
+name: Firmware bauen
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: PlatformIO installieren
+        run: pip install --disable-pip-version-check platformio
+      - name: Firmware bauen
+        run: pio run
+      - name: Firmware bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp32-cam-autocounter
+          path: |
+            .pio/build/esp32cam/firmware.bin
+            .pio/build/esp32cam/bootloader.bin
+            .pio/build/esp32cam/partitions.bin

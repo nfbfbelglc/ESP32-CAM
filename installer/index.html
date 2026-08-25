@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ESP32-CAM Autozähler sicher im Browser installieren.">
+  <title>ESP32-CAM · Online installieren</title>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+  <style>
+    :root { --ink:#17332b; --paper:#f7f4e9; --signal:#d7ff71; --muted:#587167; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:radial-gradient(circle at 85% 12%,#d7ff71 0 5%,transparent 27%),var(--paper); font-family:ui-monospace,Menlo,Consolas,monospace; }
+    main { width:min(920px,calc(100% - 40px)); min-height:100vh; margin:auto; display:grid; align-content:center; gap:26px; padding:48px 0; }
+    .eyebrow { margin:0; color:var(--muted); font-size:.82rem; letter-spacing:.11em; text-transform:uppercase; }
+    h1 { max-width:780px; margin:0; font-size:clamp(2.7rem,9vw,6.8rem); line-height:.9; letter-spacing:-.08em; }
+    .panel { max-width:690px; padding:28px; background:var(--ink); color:var(--paper); border-radius:4px; box-shadow:13px 13px 0 #a1b0a8; }
+    .panel p { line-height:1.55; } esp-web-install-button { display:block; margin:24px 0 8px; }
+    ol { display:grid; gap:10px; max-width:760px; margin:0; padding-left:1.4rem; line-height:1.5; }
+    code { padding:.1em .3em; background:#e2e4d4; } .note { color:var(--muted); font-size:.88rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">AI-Thinker ESP32-CAM · Web Serial</p>
+    <h1>Flashen.<br>Ohne Toolchain.</h1>
+    <section class="panel">
+      <p>Der Installer schreibt Bootloader, Partitionstabelle und Firmware automatisch an die korrekten Offsets. Er funktioniert in aktuellem Chrome oder Edge auf einem Desktop-Rechner.</p>
+      <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+      <p class="note">Beim ersten Flashen den BOOT-Taster gedrückt halten und kurz RESET drücken. Danach „Verbinden“ wählen.</p>
+    </section>
+    <ol>
+      <li>ESP32-CAM im MB-Shield per Datenkabel anschließen.</li>
+      <li>BOOT halten, RESET kurz drücken, dann oben verbinden.</li>
+      <li>Nach Neustart mit <code>AutoCounter-XXXXXX</code> verbinden; Passwort: <code>cam-XXXXXX</code>.</li>
+      <li><code>192.168.4.1</code> öffnen und das Heim-WLAN eintragen.</li>
+    </ol>
+    <p class="note">Die Browser-Seite funktioniert lokal; während der Installation werden keine Zugangsdaten an diese Seite übertragen.</p>
+  </main>
+</body>
+</html>

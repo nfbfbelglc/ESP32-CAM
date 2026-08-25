@@ -1,0 +1,37 @@
+name: Online-Installer veröffentlichen
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.x' }
+      - uses: actions/configure-pages@v5
+      - run: pip install --disable-pip-version-check platformio
+      - run: pio run
+      - name: Installer mit Firmware packen
+        run: |
+          mkdir -p installer/firmware
+          python ~/.platformio/packages/tool-esptoolpy/esptool.py --chip esp32 merge_bin --flash_mode dio --flash_freq 40m --flash_size 4MB -o installer/firmware/merged-firmware.bin 0x1000 .pio/build/esp32cam/bootloader.bin 0x8000 .pio/build/esp32cam/partitions.bin 0xe000 ~/.platformio/packages/framework-arduinoespressif32/tools/partitions/boot_app0.bin 0x10000 .pio/build/esp32cam/firmware.bin
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: installer }
+      - id: deployment
+        uses: actions/deploy-pages@v4

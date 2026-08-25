@@ -1,0 +1,7 @@
+.pio/
+.vscode/
+api/config.php
+*.log
+*.bin
+*.zip
+.DS_Store
