@@ -1,7 +1,26 @@
 .pio/
 .vscode/
+.idea/
+
+# Produktive Konfiguration / Secrets
 api/config.php
+.env
+.env.*
+!.env.example
+**/secrets.h
+**/credentials.h
+**/local_config.h
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Laufzeit-/Build-Dateien
 *.log
 *.bin
 *.zip
+*.bak
+*.backup
+*.dump
 .DS_Store
+._*
